@@ -1,7 +1,7 @@
 # 🎬 API REST - Vidéo Club (Sakila)
 
 **Auteur :** Juba Ait-adda  
-**Dépôt GitLab :**
+**Dépôt GitLab :** https://github.com/jubskan3ki/sakila-api-typescript
 
 ---
 
