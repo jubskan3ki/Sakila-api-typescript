@@ -1,0 +1,10 @@
+node_modules
+.idea
+.env
+.data
+.data-prod
+.database
+.database-prod
+data
+/config/*
+build

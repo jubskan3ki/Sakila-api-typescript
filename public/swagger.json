@@ -1,0 +1,1163 @@
+{
+	"openapi": "3.0.0",
+	"components": {
+		"examples": {},
+		"headers": {},
+		"parameters": {},
+		"requestBodies": {},
+		"responses": {},
+		"schemas": {
+			"IUserRole": {
+				"type": "string",
+				"enum": [
+					"admin",
+					"common"
+				]
+			},
+			"IUser": {
+				"properties": {
+					"id": {
+						"type": "number",
+						"format": "double"
+					},
+					"first_name": {
+						"type": "string"
+					},
+					"last_name": {
+						"type": "string"
+					},
+					"email_address": {
+						"type": "string"
+					},
+					"password": {
+						"type": "string"
+					},
+					"role": {
+						"$ref": "#/components/schemas/IUserRole"
+					}
+				},
+				"required": [
+					"id",
+					"first_name",
+					"last_name",
+					"email_address",
+					"password",
+					"role"
+				],
+				"type": "object",
+				"additionalProperties": false
+			},
+			"IORMIndexResponse_IUser_": {
+				"description": "Réspone à une opération de lecture de plusieurs lignes.",
+				"properties": {
+					"page": {
+						"type": "number",
+						"format": "double"
+					},
+					"limit": {
+						"type": "number",
+						"format": "double"
+					},
+					"total": {
+						"type": "number",
+						"format": "double"
+					},
+					"rows": {
+						"items": {
+							"$ref": "#/components/schemas/IUser"
+						},
+						"type": "array"
+					}
+				},
+				"required": [
+					"page",
+					"limit",
+					"total",
+					"rows"
+				],
+				"type": "object",
+				"additionalProperties": false
+			},
+			"IORMCreateResponse": {
+				"description": "Réponse à une operation d'insertion d'une ligne",
+				"properties": {
+					"id": {
+						"type": "number",
+						"format": "double",
+						"description": "ID de la ligne créée"
+					}
+				},
+				"required": [
+					"id"
+				],
+				"type": "object",
+				"additionalProperties": false
+			},
+			"Pick_IUser.Exclude_keyofIUser.id-or-role__": {
+				"properties": {
+					"first_name": {
+						"type": "string"
+					},
+					"last_name": {
+						"type": "string"
+					},
+					"email_address": {
+						"type": "string"
+					},
+					"password": {
+						"type": "string"
+					}
+				},
+				"required": [
+					"first_name",
+					"last_name",
+					"email_address",
+					"password"
+				],
+				"type": "object",
+				"description": "From T, pick a set of properties whose keys are in the union K"
+			},
+			"Omit_IUser.id-or-role_": {
+				"$ref": "#/components/schemas/Pick_IUser.Exclude_keyofIUser.id-or-role__",
+				"description": "Construct a type with the properties of T except for those in type K."
+			},
+			"IUserCreate": {
+				"$ref": "#/components/schemas/Omit_IUser.id-or-role_"
+			},
+			"IORMUpdateResponse": {
+				"description": "Réponse à une operation de mise à jour",
+				"properties": {
+					"id": {
+						"anyOf": [
+							{
+								"type": "number",
+								"format": "double"
+							},
+							{
+								"type": "string"
+							}
+						]
+					},
+					"rows": {
+						"type": "number",
+						"format": "double"
+					}
+				},
+				"required": [
+					"id",
+					"rows"
+				],
+				"type": "object",
+				"additionalProperties": false
+			},
+			"Partial_IUserCreate_": {
+				"properties": {
+					"first_name": {
+						"type": "string"
+					},
+					"last_name": {
+						"type": "string"
+					},
+					"email_address": {
+						"type": "string"
+					},
+					"password": {
+						"type": "string"
+					}
+				},
+				"type": "object",
+				"description": "Make all properties in T optional"
+			},
+			"IUserUpdate": {
+				"$ref": "#/components/schemas/Partial_IUserCreate_"
+			},
+			"IORMDeleteResponse": {
+				"description": "Réponse à une operation de suppression d'une ligne",
+				"properties": {
+					"id": {
+						"anyOf": [
+							{
+								"type": "number",
+								"format": "double"
+							},
+							{
+								"type": "string"
+							}
+						]
+					},
+					"rows": {
+						"type": "number",
+						"format": "double"
+					}
+				},
+				"required": [
+					"id",
+					"rows"
+				],
+				"type": "object",
+				"additionalProperties": false
+			},
+			"FilmSpecialFeatures": {
+				"type": "string",
+				"enum": [
+					"Trailers",
+					"Commentaries",
+					"Deleted Scenes",
+					"Behind the Scenes"
+				]
+			},
+			"IFilm": {
+				"properties": {
+					"film_id": {
+						"type": "number",
+						"format": "double"
+					},
+					"title": {
+						"type": "string"
+					},
+					"description": {
+						"type": "string",
+						"nullable": true
+					},
+					"release_year": {
+						"type": "number",
+						"format": "double",
+						"nullable": true
+					},
+					"language_id": {
+						"type": "number",
+						"format": "double"
+					},
+					"original_language_id": {
+						"type": "number",
+						"format": "double",
+						"nullable": true
+					},
+					"rental_duration": {
+						"type": "number",
+						"format": "double"
+					},
+					"rental_rate": {
+						"type": "number",
+						"format": "double"
+					},
+					"length": {
+						"type": "number",
+						"format": "double",
+						"nullable": true
+					},
+					"replacement_cost": {
+						"type": "number",
+						"format": "double"
+					},
+					"rating": {
+						"type": "string",
+						"enum": [
+							"G",
+							"PG",
+							"PG-13",
+							"R",
+							"NC-17"
+						]
+					},
+					"special_features": {
+						"items": {
+							"$ref": "#/components/schemas/FilmSpecialFeatures"
+						},
+						"type": "array"
+					},
+					"last_update": {
+						"type": "string",
+						"format": "date-time"
+					}
+				},
+				"required": [
+					"film_id",
+					"title",
+					"language_id",
+					"rental_duration",
+					"rental_rate",
+					"replacement_cost"
+				],
+				"type": "object",
+				"additionalProperties": false
+			},
+			"IORMIndexResponse_IFilm_": {
+				"description": "Réspone à une opération de lecture de plusieurs lignes.",
+				"properties": {
+					"page": {
+						"type": "number",
+						"format": "double"
+					},
+					"limit": {
+						"type": "number",
+						"format": "double"
+					},
+					"total": {
+						"type": "number",
+						"format": "double"
+					},
+					"rows": {
+						"items": {
+							"$ref": "#/components/schemas/IFilm"
+						},
+						"type": "array"
+					}
+				},
+				"required": [
+					"page",
+					"limit",
+					"total",
+					"rows"
+				],
+				"type": "object",
+				"additionalProperties": false
+			},
+			"Pick_IFilm.Exclude_keyofIFilm.film_id__": {
+				"properties": {
+					"title": {
+						"type": "string"
+					},
+					"description": {
+						"type": "string"
+					},
+					"release_year": {
+						"type": "number",
+						"format": "double"
+					},
+					"language_id": {
+						"type": "number",
+						"format": "double"
+					},
+					"original_language_id": {
+						"type": "number",
+						"format": "double"
+					},
+					"rental_duration": {
+						"type": "number",
+						"format": "double"
+					},
+					"rental_rate": {
+						"type": "number",
+						"format": "double"
+					},
+					"length": {
+						"type": "number",
+						"format": "double"
+					},
+					"replacement_cost": {
+						"type": "number",
+						"format": "double"
+					},
+					"rating": {
+						"type": "string",
+						"enum": [
+							"G",
+							"PG",
+							"PG-13",
+							"R",
+							"NC-17"
+						]
+					},
+					"special_features": {
+						"items": {
+							"$ref": "#/components/schemas/FilmSpecialFeatures"
+						},
+						"type": "array"
+					},
+					"last_update": {
+						"type": "string",
+						"format": "date-time"
+					}
+				},
+				"required": [
+					"title",
+					"language_id",
+					"rental_duration",
+					"rental_rate",
+					"replacement_cost"
+				],
+				"type": "object",
+				"description": "From T, pick a set of properties whose keys are in the union K"
+			},
+			"Omit_IFilm.film_id_": {
+				"$ref": "#/components/schemas/Pick_IFilm.Exclude_keyofIFilm.film_id__",
+				"description": "Construct a type with the properties of T except for those in type K."
+			},
+			"IFilmCreate": {
+				"$ref": "#/components/schemas/Omit_IFilm.film_id_"
+			},
+			"Partial_IFilmCreate_": {
+				"properties": {
+					"title": {
+						"type": "string"
+					},
+					"description": {
+						"type": "string"
+					},
+					"release_year": {
+						"type": "number",
+						"format": "double"
+					},
+					"language_id": {
+						"type": "number",
+						"format": "double"
+					},
+					"original_language_id": {
+						"type": "number",
+						"format": "double"
+					},
+					"rental_duration": {
+						"type": "number",
+						"format": "double"
+					},
+					"rental_rate": {
+						"type": "number",
+						"format": "double"
+					},
+					"length": {
+						"type": "number",
+						"format": "double"
+					},
+					"replacement_cost": {
+						"type": "number",
+						"format": "double"
+					},
+					"rating": {
+						"type": "string",
+						"enum": [
+							"G",
+							"PG",
+							"PG-13",
+							"R",
+							"NC-17"
+						]
+					},
+					"special_features": {
+						"items": {
+							"$ref": "#/components/schemas/FilmSpecialFeatures"
+						},
+						"type": "array"
+					},
+					"last_update": {
+						"type": "string",
+						"format": "date-time"
+					}
+				},
+				"type": "object",
+				"description": "Make all properties in T optional"
+			},
+			"IFilmUpdate": {
+				"$ref": "#/components/schemas/Partial_IFilmCreate_"
+			},
+			"IActor": {
+				"properties": {
+					"actor_id": {
+						"type": "number",
+						"format": "double"
+					},
+					"first_name": {
+						"type": "string"
+					},
+					"last_name": {
+						"type": "string"
+					},
+					"last_update": {
+						"type": "string",
+						"format": "date-time"
+					}
+				},
+				"required": [
+					"actor_id",
+					"first_name",
+					"last_name",
+					"last_update"
+				],
+				"type": "object",
+				"additionalProperties": false
+			},
+			"IORMIndexResponse_IActor_": {
+				"description": "Réspone à une opération de lecture de plusieurs lignes.",
+				"properties": {
+					"page": {
+						"type": "number",
+						"format": "double"
+					},
+					"limit": {
+						"type": "number",
+						"format": "double"
+					},
+					"total": {
+						"type": "number",
+						"format": "double"
+					},
+					"rows": {
+						"items": {
+							"$ref": "#/components/schemas/IActor"
+						},
+						"type": "array"
+					}
+				},
+				"required": [
+					"page",
+					"limit",
+					"total",
+					"rows"
+				],
+				"type": "object",
+				"additionalProperties": false
+			}
+		},
+		"securitySchemes": {
+			"jwt": {
+				"type": "apiKey",
+				"name": "jwt",
+				"in": "header",
+				"authorizationUrl": "http://swagger.io/api/oauth/dialog"
+			},
+			"api_key": {
+				"type": "apiKey",
+				"name": "access_token",
+				"in": "query"
+			},
+			"tsoa_auth": {
+				"type": "oauth2",
+				"flows": {
+					"implicit": {
+						"authorizationUrl": "http://swagger.io/api/oauth/dialog",
+						"scopes": {
+							"write:pets": "modify things",
+							"read:pets": "read things"
+						}
+					}
+				}
+			}
+		}
+	},
+	"info": {
+		"title": "rest_api_typescript",
+		"version": "1.0.0",
+		"description": "basic rest api implementation",
+		"license": {
+			"name": "ISC"
+		},
+		"contact": {
+			"name": "rijenth"
+		}
+	},
+	"paths": {
+		"/users": {
+			"get": {
+				"operationId": "GetUsers",
+				"responses": {
+					"200": {
+						"description": "Ok",
+						"content": {
+							"application/json": {
+								"schema": {
+									"$ref": "#/components/schemas/IORMIndexResponse_IUser_"
+								}
+							}
+						}
+					}
+				},
+				"description": "Récupérer une page d'utilisateurs.",
+				"security": [
+					{
+						"jwt": []
+					}
+				],
+				"parameters": [
+					{
+						"description": "La page (zéro-index) à récupérer",
+						"in": "query",
+						"name": "page",
+						"required": false,
+						"schema": {
+							"type": "string"
+						}
+					},
+					{
+						"description": "Le nombre d'éléments à récupérer (max 50)",
+						"in": "query",
+						"name": "limit",
+						"required": false,
+						"schema": {
+							"type": "string"
+						}
+					}
+				]
+			},
+			"put": {
+				"operationId": "CreateUser",
+				"responses": {
+					"200": {
+						"description": "Ok",
+						"content": {
+							"application/json": {
+								"schema": {
+									"$ref": "#/components/schemas/IORMCreateResponse"
+								}
+							}
+						}
+					}
+				},
+				"description": "Créer un nouvel utilisateur",
+				"security": [
+					{
+						"jwt": []
+					}
+				],
+				"parameters": [],
+				"requestBody": {
+					"required": true,
+					"content": {
+						"application/json": {
+							"schema": {
+								"$ref": "#/components/schemas/IUserCreate"
+							}
+						}
+					}
+				}
+			}
+		},
+		"/users/{userId}": {
+			"get": {
+				"operationId": "ReadUser",
+				"responses": {
+					"200": {
+						"description": "Ok",
+						"content": {
+							"application/json": {
+								"schema": {
+									"$ref": "#/components/schemas/IUser"
+								}
+							}
+						}
+					}
+				},
+				"description": "Récupérer une utilisateur avec le ID passé dans le URL",
+				"security": [
+					{
+						"jwt": []
+					}
+				],
+				"parameters": [
+					{
+						"in": "path",
+						"name": "userId",
+						"required": true,
+						"schema": {
+							"format": "double",
+							"type": "number"
+						}
+					}
+				]
+			},
+			"patch": {
+				"operationId": "UpdateUser",
+				"responses": {
+					"200": {
+						"description": "Ok",
+						"content": {
+							"application/json": {
+								"schema": {
+									"$ref": "#/components/schemas/IORMUpdateResponse"
+								}
+							}
+						}
+					}
+				},
+				"description": "Mettre à jour un utilisateur avec le ID passé dans le URL",
+				"security": [
+					{
+						"jwt": []
+					}
+				],
+				"parameters": [
+					{
+						"in": "path",
+						"name": "userId",
+						"required": true,
+						"schema": {
+							"format": "double",
+							"type": "number"
+						}
+					}
+				],
+				"requestBody": {
+					"required": true,
+					"content": {
+						"application/json": {
+							"schema": {
+								"$ref": "#/components/schemas/IUserUpdate"
+							}
+						}
+					}
+				}
+			},
+			"delete": {
+				"operationId": "DeleteUser",
+				"responses": {
+					"200": {
+						"description": "Ok",
+						"content": {
+							"application/json": {
+								"schema": {
+									"$ref": "#/components/schemas/IORMDeleteResponse"
+								}
+							}
+						}
+					}
+				},
+				"description": "Supprimer un utilisateur",
+				"security": [
+					{
+						"jwt": []
+					}
+				],
+				"parameters": [
+					{
+						"in": "path",
+						"name": "userId",
+						"required": true,
+						"schema": {
+							"format": "double",
+							"type": "number"
+						}
+					}
+				]
+			}
+		},
+		"/info": {
+			"get": {
+				"operationId": "Get",
+				"responses": {
+					"200": {
+						"description": "Ok",
+						"content": {
+							"application/json": {
+								"schema": {
+									"properties": {
+										"database_table_names": {
+											"items": {
+												"type": "string"
+											},
+											"type": "array"
+										},
+										"database_tables_count": {
+											"type": "number",
+											"format": "double"
+										},
+										"database_status": {
+											"type": "string",
+											"enum": [
+												"healthy",
+												"unhealthy"
+											]
+										}
+									},
+									"required": [
+										"database_table_names",
+										"database_tables_count",
+										"database_status"
+									],
+									"type": "object"
+								}
+							}
+						}
+					}
+				},
+				"description": "Récupérer les informations générales de l'API.",
+				"security": [],
+				"parameters": []
+			}
+		},
+		"/films": {
+			"get": {
+				"operationId": "Index",
+				"responses": {
+					"200": {
+						"description": "Ok",
+						"content": {
+							"application/json": {
+								"schema": {
+									"$ref": "#/components/schemas/IORMIndexResponse_IFilm_"
+								}
+							}
+						}
+					}
+				},
+				"description": "Récupérer une page de films.",
+				"security": [
+					{
+						"jwt": []
+					}
+				],
+				"parameters": [
+					{
+						"in": "query",
+						"name": "page",
+						"required": false,
+						"schema": {
+							"type": "string"
+						}
+					},
+					{
+						"in": "query",
+						"name": "limit",
+						"required": false,
+						"schema": {
+							"type": "string"
+						}
+					}
+				]
+			},
+			"put": {
+				"operationId": "Put",
+				"responses": {
+					"200": {
+						"description": "Ok",
+						"content": {
+							"application/json": {
+								"schema": {
+									"$ref": "#/components/schemas/IORMCreateResponse"
+								}
+							}
+						}
+					}
+				},
+				"description": "Créer un nouveau",
+				"security": [
+					{
+						"jwt": [
+							"admin"
+						]
+					}
+				],
+				"parameters": [],
+				"requestBody": {
+					"required": true,
+					"content": {
+						"application/json": {
+							"schema": {
+								"$ref": "#/components/schemas/IFilmCreate"
+							}
+						}
+					}
+				}
+			}
+		},
+		"/films/{filmId}": {
+			"get": {
+				"operationId": "Get",
+				"responses": {
+					"200": {
+						"description": "Ok",
+						"content": {
+							"application/json": {
+								"schema": {
+									"$ref": "#/components/schemas/IFilm"
+								}
+							}
+						}
+					}
+				},
+				"description": "Récupérer une film avec le ID passé dans le URL",
+				"security": [
+					{
+						"jwt": []
+					}
+				],
+				"parameters": [
+					{
+						"in": "path",
+						"name": "filmId",
+						"required": true,
+						"schema": {
+							"format": "double",
+							"type": "number"
+						}
+					}
+				]
+			},
+			"delete": {
+				"operationId": "Delete",
+				"responses": {
+					"200": {
+						"description": "Ok",
+						"content": {
+							"application/json": {
+								"schema": {
+									"$ref": "#/components/schemas/IORMDeleteResponse"
+								}
+							}
+						}
+					}
+				},
+				"description": "Supprimer un film",
+				"security": [
+					{
+						"jwt": [
+							"admin"
+						]
+					}
+				],
+				"parameters": [
+					{
+						"in": "path",
+						"name": "filmId",
+						"required": true,
+						"schema": {
+							"format": "double",
+							"type": "number"
+						}
+					}
+				]
+			}
+		},
+		"/films/{filmID}": {
+			"patch": {
+				"operationId": "Patch",
+				"responses": {
+					"200": {
+						"description": "Ok",
+						"content": {
+							"application/json": {
+								"schema": {
+									"$ref": "#/components/schemas/IORMUpdateResponse"
+								}
+							}
+						}
+					}
+				},
+				"security": [
+					{
+						"jwt": [
+							"admin"
+						]
+					}
+				],
+				"parameters": [
+					{
+						"in": "path",
+						"name": "filmID",
+						"required": true,
+						"schema": {
+							"format": "double",
+							"type": "number"
+						}
+					}
+				],
+				"requestBody": {
+					"required": true,
+					"content": {
+						"application/json": {
+							"schema": {
+								"$ref": "#/components/schemas/IFilmUpdate"
+							}
+						}
+					}
+				}
+			}
+		},
+		"/films/{filmId}/actors": {
+			"get": {
+				"operationId": "Index",
+				"responses": {
+					"200": {
+						"description": "Ok",
+						"content": {
+							"application/json": {
+								"schema": {
+									"$ref": "#/components/schemas/IORMIndexResponse_IActor_"
+								}
+							}
+						}
+					}
+				},
+				"description": "Récupérer tout les acteurs d'un film",
+				"security": [
+					{
+						"jwt": []
+					}
+				],
+				"parameters": [
+					{
+						"in": "path",
+						"name": "filmId",
+						"required": true,
+						"schema": {
+							"format": "double",
+							"type": "number"
+						}
+					},
+					{
+						"in": "query",
+						"name": "page",
+						"required": false,
+						"schema": {
+							"type": "string"
+						}
+					},
+					{
+						"in": "query",
+						"name": "limit",
+						"required": false,
+						"schema": {
+							"type": "string"
+						}
+					}
+				]
+			}
+		},
+		"/films/{filmId}/actors/{actorId}": {
+			"get": {
+				"operationId": "Get",
+				"responses": {
+					"200": {
+						"description": "Ok",
+						"content": {
+							"application/json": {
+								"schema": {
+									"$ref": "#/components/schemas/IActor"
+								}
+							}
+						}
+					}
+				},
+				"description": "Récupérer un acteur d'un film",
+				"security": [
+					{
+						"jwt": []
+					}
+				],
+				"parameters": [
+					{
+						"in": "path",
+						"name": "actorId",
+						"required": true,
+						"schema": {
+							"format": "double",
+							"type": "number"
+						}
+					},
+					{
+						"in": "path",
+						"name": "filmId",
+						"required": true,
+						"schema": {
+							"format": "double",
+							"type": "number"
+						}
+					}
+				]
+			}
+		},
+		"/auth/login": {
+			"post": {
+				"operationId": "Login",
+				"responses": {
+					"200": {
+						"description": "Ok",
+						"content": {
+							"application/json": {
+								"schema": {
+									"properties": {
+										"error": {
+											"type": "string"
+										},
+										"token": {
+											"type": "string"
+										},
+										"ok": {
+											"type": "boolean"
+										}
+									},
+									"required": [
+										"ok"
+									],
+									"type": "object"
+								}
+							}
+						}
+					}
+				},
+				"security": [],
+				"parameters": [],
+				"requestBody": {
+					"required": true,
+					"content": {
+						"application/json": {
+							"schema": {
+								"properties": {
+									"password": {
+										"type": "string",
+										"description": "Mot de passe de l'utilisateur"
+									},
+									"email_address": {
+										"type": "string",
+										"description": "Identifiant de l'utilisateur."
+									}
+								},
+								"required": [
+									"email_address"
+								],
+								"type": "object"
+							}
+						}
+					}
+				}
+			}
+		},
+		"/auth/authorize": {
+			"get": {
+				"operationId": "AuthorizeFromLink",
+				"responses": {
+					"200": {
+						"description": "Ok",
+						"content": {
+							"application/json": {
+								"schema": {
+									"properties": {
+										"message": {
+											"type": "string"
+										},
+										"redirectTo": {
+											"type": "string"
+										},
+										"access": {
+											"type": "string"
+										}
+									},
+									"required": [
+										"message",
+										"redirectTo",
+										"access"
+									],
+									"type": "object"
+								}
+							}
+						}
+					}
+				},
+				"security": [],
+				"parameters": [
+					{
+						"in": "query",
+						"name": "jwt",
+						"required": true,
+						"schema": {
+							"type": "string"
+						}
+					}
+				]
+			}
+		}
+	},
+	"servers": [
+		{
+			"url": "/"
+		}
+	]
+}

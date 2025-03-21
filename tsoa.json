@@ -1,0 +1,47 @@
+{
+	"entryFile": "src/server.ts",
+	"noImplicitAdditionalProperties": "throw-on-extras",
+	"controllerPathGlobs": ["src/controllers/**/*Controller.ts"],
+	"spec": {
+		"outputDirectory": "./public",
+		"specVersion": 3,
+		"securityDefinitions": {
+			"jwt": {
+				"type": "apiKey",
+				"name": "jwt",
+				"in": "header",
+				"authorizationUrl": "http://swagger.io/api/oauth/dialog"
+			},
+			"api_key": {
+				"type": "apiKey",
+				"name": "access_token",
+				"in": "query"
+			},
+			"tsoa_auth": {
+				"type": "oauth2",
+				"authorizationUrl": "http://swagger.io/api/oauth/dialog",
+				"flow": "implicit",
+				"scopes": {
+					"write:pets": "modify things",
+					"read:pets": "read things"
+				}
+			}
+		}
+	},
+	"routes": {
+		"routesDir": "src/routes",
+		"authenticationModule": "./src/utilities/auth/authentication.middleware.ts"
+	},
+	"compilerOptions": {
+		"baseUrl": "src",
+		"paths": {
+			"@models/*": ["models/*"],
+			"@orm/*": ["utilities/ORM/*"],
+			"@error/*": ["utilities/error/*"],
+			"@routes/*": ["routes/*"],
+			"@controllers/*": ["controllers/*"],
+			"@utilities/*": ["utilities/*"],
+			"@logging/*": ["utilities/logging/*"]
+		}
+	}
+}

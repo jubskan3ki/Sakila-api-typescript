@@ -1,0 +1,50 @@
+# STAGE 1 - BUILD
+FROM node:22-alpine AS api-builder
+
+WORKDIR /app
+
+# Installation pnpm en build uniquement
+RUN corepack enable && corepack prepare pnpm@latest --activate
+
+# Copie package pour build + install
+COPY package.json pnpm-lock.yaml ./
+
+# Install prod et dev dépendances pour build
+RUN pnpm install --frozen-lockfile
+
+# Copie du code pour builder (src, config...)
+COPY . .
+
+# Build du projet
+RUN pnpm run clean
+RUN pnpm run build
+
+# STAGE 2 - PROD
+FROM node:22-alpine AS api
+
+WORKDIR /app
+
+# Installe pnpm en prod
+RUN corepack enable && corepack prepare pnpm@latest --activate
+
+# Installe dépendances nécessaires en prod uniquement
+COPY package.json pnpm-lock.yaml ./
+
+# Copie du build uniquement
+COPY --from=api-builder /app/build ./build
+
+# Installe uniquement les deps de production
+RUN pnpm install --frozen-lockfile --prod
+
+# Ajout du script entrypoint pour gérer la génération des clés
+COPY entrypoint.sh /app/entrypoint.sh
+RUN chmod +x /app/entrypoint.sh
+
+# Expose le port utilisé
+EXPOSE 5050
+
+# Définition de l'entrypoint (setup si besoin de générer des clés)
+ENTRYPOINT ["/bin/sh", "/app/entrypoint.sh"]
+
+# Lancement de l'API
+CMD ["pnpm", "run", "start-api"]

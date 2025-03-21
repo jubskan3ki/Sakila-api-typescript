@@ -1,0 +1,284 @@
+{
+	"info": {
+		"name": "Sakila REST API - Typescript / TSOA",
+		"_postman_id": "abcdef12-3456-7890-abcd-ef1234567890",
+		"description": "Collection Postman pour l'API RESTful Sakila, développée avec Typescript, TSOA, Express et MariaDB.\n\nInclut les routes Auth, Films, Acteurs, Info et GraphQL.",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"variable": [
+		{
+			"key": "base_url",
+			"value": "http://localhost:5050"
+		},
+		{
+			"key": "jwt",
+			"value": ""
+		}
+	],
+	"auth": {
+		"type": "bearer",
+		"bearer": [
+			{
+				"key": "token",
+				"value": "{{jwt}}",
+				"type": "string"
+			}
+		]
+	},
+	"item": [
+		{
+			"name": "🛠️ Auth",
+			"item": [
+				{
+					"name": "Login",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"email_address\": \"admin@example.com\",\n  \"password\": \"password\"\n}"
+						},
+						"url": {
+							"raw": "{{base_url}}/auth/login",
+							"host": ["{{base_url}}"],
+							"path": ["auth", "login"]
+						}
+					}
+				},
+				{
+					"name": "Refresh Token",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer {{jwt}}"
+							}
+						],
+						"url": {
+							"raw": "{{base_url}}/auth/refresh",
+							"host": ["{{base_url}}"],
+							"path": ["auth", "refresh"]
+						}
+					}
+				}
+			]
+		},
+		{
+			"name": "👤 Users",
+			"item": [
+				{
+					"name": "Create Admin User",
+					"request": {
+						"method": "PUT",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"first_name\": \"Admin\",\n  \"last_name\": \"User\",\n  \"email_address\": \"admin@example.com\",\n  \"password\": \"password\"\n}"
+						},
+						"url": {
+							"raw": "{{base_url}}/users",
+							"host": ["{{base_url}}"],
+							"path": ["users"]
+						}
+					}
+				}
+			]
+		},
+		{
+			"name": "ℹ️ Info",
+			"item": [
+				{
+					"name": "Health Check",
+					"request": {
+						"method": "GET",
+						"url": {
+							"raw": "{{base_url}}/info",
+							"host": ["{{base_url}}"],
+							"path": ["info"]
+						}
+					}
+				}
+			]
+		},
+		{
+			"name": "🎬 Films",
+			"item": [
+				{
+					"name": "Get All Films (paginated)",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{base_url}}/films?page=1&limit=10",
+							"host": ["{{base_url}}"],
+							"path": ["films"],
+							"query": [
+								{ "key": "page", "value": "1" },
+								{ "key": "limit", "value": "10" }
+							]
+						}
+					}
+				},
+				{
+					"name": "Get Film by ID",
+					"request": {
+						"method": "GET",
+						"url": {
+							"raw": "{{base_url}}/films/1",
+							"host": ["{{base_url}}"],
+							"path": ["films", "1"]
+						}
+					}
+				},
+				{
+					"name": "Create Film",
+					"request": {
+						"method": "PUT",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"title\": \"Nouveau Film\",\n  \"description\": \"Une histoire incroyable\",\n  \"release_year\": 2024,\n  \"language_id\": 1,\n  \"rental_duration\": 3,\n  \"rental_rate\": 4.99,\n  \"replacement_cost\": 20.0,\n  \"rating\": \"PG-13\",\n  \"special_features\": [\"Trailers\"]\n}"
+						},
+						"url": {
+							"raw": "{{base_url}}/films",
+							"host": ["{{base_url}}"],
+							"path": ["films"]
+						}
+					}
+				},
+				{
+					"name": "Update Film",
+					"request": {
+						"method": "PATCH",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"description\": \"Nouvelle description mise à jour\",\n  \"rental_rate\": 3.50\n}"
+						},
+						"url": {
+							"raw": "{{base_url}}/films/1",
+							"host": ["{{base_url}}"],
+							"path": ["films", "1"]
+						}
+					}
+				},
+				{
+					"name": "Delete Film",
+					"request": {
+						"method": "DELETE",
+						"url": {
+							"raw": "{{base_url}}/films/1",
+							"host": ["{{base_url}}"],
+							"path": ["films", "1"]
+						}
+					}
+				},
+				{
+					"name": "Upload Film Cover",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "multipart/form-data"
+							}
+						],
+						"body": {
+							"mode": "formdata",
+							"formdata": [
+								{
+									"key": "cover",
+									"type": "file",
+									"src": ""
+								}
+							]
+						},
+						"url": {
+							"raw": "{{base_url}}/films/1/cover",
+							"host": ["{{base_url}}"],
+							"path": ["films", "1", "cover"]
+						}
+					}
+				}
+			]
+		},
+		{
+			"name": "🎭 Actors by Film",
+			"item": [
+				{
+					"name": "List Actors for Film",
+					"request": {
+						"method": "GET",
+						"url": {
+							"raw": "{{base_url}}/films/1/actors?page=1&limit=10",
+							"host": ["{{base_url}}"],
+							"path": ["films", "1", "actors"],
+							"query": [
+								{ "key": "page", "value": "1" },
+								{ "key": "limit", "value": "10" }
+							]
+						}
+					}
+				},
+				{
+					"name": "Get Actor from Film",
+					"request": {
+						"method": "GET",
+						"url": {
+							"raw": "{{base_url}}/films/1/actors/1",
+							"host": ["{{base_url}}"],
+							"path": ["films", "1", "actors", "1"]
+						}
+					}
+				}
+			]
+		},
+		{
+			"name": "🧙 GraphQL",
+			"item": [
+				{
+					"name": "GraphQL - Films & Actors",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"query\": \"{ films { film_id title actors { actor_id first_name last_name } } }\"\n}"
+						},
+						"url": {
+							"raw": "{{base_url}}/graphql",
+							"host": ["{{base_url}}"],
+							"path": ["graphql"]
+						}
+					}
+				}
+			]
+		}
+	]
+}

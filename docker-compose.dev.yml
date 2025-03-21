@@ -1,0 +1,40 @@
+services:
+    api:
+        build:
+            context: .
+            dockerfile: Dockerfile.api.dev
+        ports:
+            - '5050:5050'
+        volumes:
+            - .:/app
+            - /app/node_modules
+        environment:
+            - NODE_ENV=development
+            - PORT=5050
+            - DB_HOST=database
+            - DB_USER=root
+            - DB_PASSWORD=rootpassword
+            - DB_DATABASE=sakila
+        restart: always
+        networks:
+            - api-network
+
+    database:
+        image: mariadb
+        restart: always
+        ports:
+            - '3309:3306'
+        environment:
+            - MYSQL_ALLOW_EMPTY_PASSWORD=false
+            - MYSQL_ROOT_PASSWORD=rootpassword
+        command: ['--character-set-server=utf8mb4', '--collation-server=utf8mb4_unicode_ci']
+        volumes:
+            - ./.database:/var/lib/mysql
+            - ./database:/docker-entrypoint-initdb.d:ro
+        networks:
+            - api-network
+
+networks:
+    api-network:
+        driver: bridge
+        name: api-network
