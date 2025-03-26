@@ -21,4 +21,4 @@ COPY .env .env
 EXPOSE 5050
 
 # Commande de lancement
-CMD ["pnpm", "run", "dev-server"]
+CMD ["pnpm", "run", "start-dev"]

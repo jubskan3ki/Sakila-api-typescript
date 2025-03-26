@@ -15,5 +15,5 @@ CREATE TABLE users (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 INSERT INTO users (first_name, last_name, email_address, password, role)
-    VALUES ('pierre', 'lerocher', 'rijenththedon@gmail.com', 'password', 'admin'),
+    VALUES ('pierre', 'lerocher', 'admin@example.com', 'password', 'admin'),
            ('jeanne', 'darc', 'test@test.com', 'password', 'common');

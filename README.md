@@ -16,18 +16,17 @@ L'API expose des routes CRUD complètes, sécurisées avec JWT et RBAC, permetta
 
 ## 📋 Fonctionnalités réalisées
 
-| Fonctionnalité                                               | Statut |
-| ------------------------------------------------------------ | :----: |
-| Conteneur Docker fonctionnel                                 |   ✅   |
-| Route `/info` (health check + test DB)                       |   ✅   |
-| CRUD complet des films (+ documentation TSOA)                |   ✅   |
-| Pagination sur la liste des films (`/films?page=1&limit=10`) |   ✅   |
-| Routes RESTful des acteurs d’un film (`/films/:id/actors`)   |   ✅   |
-| Authentification JWT avec scopes                             |   ✅   |
-| RBAC : seuls les admins peuvent créer, modifier, supprimer   |   ✅   |
-| Refresh Token (gestion simple d'un token d’accès long)       |   ✅   |
-| 📦 Export Postman                                            |   ✅   |
-| 📚 Documentation Swagger (/docs)                             |   ✅   |
+| Fonctionnalité                                             | Statut |
+| ---------------------------------------------------------- | :----: |
+| Conteneur Docker fonctionnel (API + DB)                    |   ✅   |
+| Route `/info` (health check + test DB)                     |   ✅   |
+| CRUD complet des films (+ documentation TSOA)              |   ✅   |
+| Pagination des films (`/films?page=1&limit=10`)            |   ✅   |
+| Liste des acteurs d’un film (`/films/:id/actors`)          |   ✅   |
+| Authentification JWT + Refresh token                       |   ✅   |
+| RBAC : seuls les admins peuvent créer, modifier, supprimer |   ✅   |
+| Collection Postman prête à l’emploi                        |   ✅   |
+| Documentation Swagger automatique `/docs`                  |   ✅   |
 
 ❌ **Fonctionnalités non incluses**
 
@@ -40,23 +39,50 @@ L'API expose des routes CRUD complètes, sécurisées avec JWT et RBAC, permetta
 
 ### 1️⃣ Prérequis
 
-- Docker & Docker Compose installés sur la machine locale.
+- **Docker** et **Docker Compose** installés sur la machine.
+
+---
 
 ### 2️⃣ Cloner le projet
 
 ```bash
-git clone [lien vers ton repo gitlab]
-cd [nom-du-dossier]
+git clone https://github.com/jubskan3ki/sakila-api-typescript
+cd sakila-api-typescript
 ```
 
-### 3️⃣ Lancer le projet avec Docker Compose
+---
+
+### 3️⃣ Lancer en **développement**
 
 ```bash
-docker-compose up --build
+docker-compose -f docker-compose.dev.yml up --build
 ```
 
-- L'API sera accessible à l'adresse : `http://localhost:5050`
-- La base de données MariaDB est exposée sur le port `3306`.
+- API accessible sur : [http://localhost:5050](http://localhost:5050)
+- Base de données MariaDB sur le port local `3307`.
+
+---
+
+### 4️⃣ Lancer en **production**
+
+```bash
+docker-compose -f docker-compose.prod.yml up --build
+```
+
+---
+
+### 5️⃣ Données de connexion par défaut
+
+La base de données `sakila` est initialisée automatiquement avec deux utilisateurs dans la table `users` :
+
+| Prénom | Nom      | Email             | Mot de passe | Rôle   |
+| ------ | -------- | ----------------- | ------------ | ------ |
+| Pierre | Lerocher | admin@example.com | password     | admin  |
+| Jeanne | D'Arc    | test@test.com     | password     | common |
+
+> 🔐 Pense à modifier les mots de passe si déployé en ligne !
+
+---
 
 ### 6️⃣ Tester avec Postman
 
@@ -96,16 +122,28 @@ Une **collection Postman** est fournie dans le fichier `postman.json`.
 
 ## ✅ Conformité et exigences respectées
 
-| Critères                                           | Statut |
-| -------------------------------------------------- | ------ |
-| API REST JSON uniquement                           | ✅     |
-| Respect des bonnes pratiques REST (routes/actions) | ✅     |
-| Authentification JWT RS256 avec scopes TSOA        | ✅     |
-| RBAC : seuls les admins peuvent gérer les films    | ✅     |
-| Pagination sur la liste des films                  | ✅     |
-| Docker multi-container (API + MariaDB)             | ✅     |
-| Aucun framework tiers (Nest, Symfony, etc.)        | ✅     |
-| API Stateless (pas de session côté serveur)        | ✅     |
-| Logs clairs et gestion des erreurs pertinentes     | ✅     |
-| Documentation générée automatiquement avec TSOA    | ✅     |
-| Export Postman pour faciliter l'évaluation         | ✅     |
+| Critère                                         | Statut |
+| ----------------------------------------------- | ------ |
+| API REST JSON uniquement                        | ✅     |
+| Respect des bonnes pratiques RESTful            | ✅     |
+| Authentification JWT RS256 avec scopes via TSOA | ✅     |
+| RBAC (admin uniquement pour films)              | ✅     |
+| Pagination                                      | ✅     |
+| Docker multi-container (API + MariaDB)          | ✅     |
+| Zéro framework (pas de NestJS / Symfony...)     | ✅     |
+| API Stateless                                   | ✅     |
+| Logs clairs et gestion des erreurs              | ✅     |
+| Documentation Swagger automatique               | ✅     |
+| Export Postman pour faciliter les tests         | ✅     |
+
+---
+
+## 📦 Structure des fichiers SQL
+
+Le dossier `/database/` contient :
+
+- `01_sakila_schema.sql` : création de la base `sakila`
+- `02_sakila_data.sql` : données de test
+- `03_users_schema.sql` : table `users` + données de connexion
+
+Ils sont automatiquement exécutés au premier lancement du container.

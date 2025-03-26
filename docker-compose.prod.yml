@@ -35,7 +35,7 @@ services:
         command: ['--character-set-server=utf8mb4', '--collation-server=utf8mb4_unicode_ci']
         volumes:
             - ./.data-prod:/var/lib/mysql
-            - ./database-prod:/docker-entrypoint-initdb.d:ro
+            - ./database:/docker-entrypoint-initdb.d:ro
         networks:
             - api-prod-network
 

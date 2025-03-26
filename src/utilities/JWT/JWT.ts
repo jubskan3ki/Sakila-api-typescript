@@ -1,10 +1,10 @@
+import { JWT_ACCESS_AUD, JWT_ISSUER } from './JWTConstants';
+import { ErrorCode } from '../enums/ErrorCode';
 import { ApiError } from '@error/ApiError';
 import { existsSync, readFileSync } from 'fs';
 import type { JwtPayload, SignOptions, VerifyOptions } from 'jsonwebtoken';
 import { sign, TokenExpiredError, verify } from 'jsonwebtoken';
 import { join } from 'path';
-import { ErrorCode } from '../enums/ErrorCode';
-import { JWT_ACCESS_AUD, JWT_ISSUER } from './JWTConstants';
 
 export class JWT {
 	private static PRIVATE_KEY: string;
